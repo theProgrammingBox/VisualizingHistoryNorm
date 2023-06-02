@@ -47,8 +47,8 @@ public:
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
-		expDecayMean *= beta1;
-		expDecayVariance *= beta2;
+		/*expDecayMean *= beta1;
+		expDecayVariance *= beta2;*/
 
 		float input = randomFloat(0.0f, (ScreenHeight() * 0.5f - GetMouseY()) * 1);
 
@@ -56,11 +56,14 @@ public:
 		float delta = input - mean;
 		variance = beta2 * variance + (1.0f - beta2) * delta * delta;
 
-		float CorrectedMean = mean / (1.0f - expDecayMean);
-		float CorrectedVariance = variance / (1.0f - expDecayVariance);
+		/*float CorrectedMean = mean / (1.0f - expDecayMean);
+		float CorrectedVariance = variance / (1.0f - expDecayVariance);*/
 
-		float invStdDev = InvSqrt(CorrectedVariance + epsilon);
-		float output = (input - CorrectedMean) * invStdDev;
+		/*float invStdDev = InvSqrt(CorrectedVariance + epsilon);
+		float output = (input - CorrectedMean) * invStdDev;*/
+
+		float invStdDev = InvSqrt(variance + epsilon);
+		float output = (input - mean) * invStdDev;
 
 		Draw(idx, (output * 0.25 + 1) * ScreenHeight() * 0.5);
 		idx *= idx++ < ScreenWidth();
